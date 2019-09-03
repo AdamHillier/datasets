@@ -99,9 +99,9 @@ predict the bounding box and label of each individual object.
 """
 _VOC2012_URL = "http://host.robots.ox.ac.uk/pascal/VOC/voc2012/"
 # Original site, it is down very often.
-# _VOC2012_DATA_URL = "http://host.robots.ox.ac.uk/pascal/VOC/voc2012/"
+_VOC2012_DATA_URL = "http://host.robots.ox.ac.uk/pascal/VOC/voc2012/"
 # Data mirror:
-_VOC2012_DATA_URL = "https://pjreddie.com/media/files/"
+# _VOC2012_DATA_URL = "https://pjreddie.com/media/files/"
 # The labels and poses are identical to those from VOC2007.
 _VOC2012_LABELS = _VOC2007_LABELS
 _VOC2012_POSES = _VOC2007_POSES

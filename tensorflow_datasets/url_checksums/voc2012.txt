@@ -1,1 +1,2 @@
+http://host.robots.ox.ac.uk/pascal/VOC/voc2012/VOCtrainval_11-May-2012.tar 1999639040 e14f763270cf193d0b5f74b169f44157a4b0c6efa708f4dd0ff78ee691763bcb
 https://pjreddie.com/media/files/VOCtrainval_11-May-2012.tar 1999639040 e14f763270cf193d0b5f74b169f44157a4b0c6efa708f4dd0ff78ee691763bcb
