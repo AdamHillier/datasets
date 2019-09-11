@@ -290,3 +290,89 @@ class Voc2012(tfds.core.GeneratorBasedBuilder):
         "labels": labels,
         "labels_no_difficult": labels_no_difficult,
     }
+
+class Voc2007Segmentation(Voc2007):
+  """Pascal VOC 2007, segmentation."""
+
+  VERSION = tfds.core.Version("1.0.0")
+
+  def _info(self):
+    return tfds.core.DatasetInfo(
+        builder=self,
+        description=_VOC2007_DESCRIPTION,
+        features=tfds.features.FeaturesDict({
+            "image": tfds.features.Image(),
+            "image/filename": tfds.features.Text(),
+            "segmentation/class": tfds.features.Image(),
+            "segmentation/object": tfds.features.Image(),
+        }),
+        urls=[_VOC2007_URL],
+        citation=_VOC2007_CITATION,
+    )
+
+  def _generate_examples(self, data_path, set_name):
+    set_filepath = os.path.join(
+        data_path, "VOCdevkit/VOC2007/ImageSets/Segmentation/{}.txt".format(set_name))
+    with tf.io.gfile.GFile(set_filepath, "r") as f:
+      for line in f:
+        image_id = line.strip()
+        example = self._generate_example(data_path, image_id)
+        yield image_id, example
+
+  def _generate_example(self, data_path, image_id):
+    """Yields examples."""
+    image_filepath = os.path.join(
+        data_path, "VOCdevkit/VOC2007/JPEGImages", "{}.jpg".format(image_id))
+    seg_class_filepath = os.path.join(
+        data_path, "VOCdevkit/VOC2007/SegmentationClass", "{}.png".format(image_id))
+    seg_obj_filepath = os.path.join(
+        data_path, "VOCdevkit/VOC2007/SegmentationObject", "{}.png".format(image_id))
+    return {
+        "image": image_filepath,
+        "image/filename": image_id + ".jpg",
+        "segmentation/class": seg_class_filepath,
+        "segmentation/object": seg_obj_filepath,
+    }
+
+class Voc2012Segmentation(Voc2012):
+  """Pascal VOC 2012, segmentation."""
+
+  VERSION = tfds.core.Version("1.0.0")
+
+  def _info(self):
+    return tfds.core.DatasetInfo(
+        builder=self,
+        description=_VOC2012_DESCRIPTION,
+        features=tfds.features.FeaturesDict({
+            "image": tfds.features.Image(),
+            "image/filename": tfds.features.Text(),
+            "segmentation/class": tfds.features.Image(),
+            "segmentation/object": tfds.features.Image(),
+        }),
+        urls=[_VOC2012_URL],
+        citation=_VOC2012_CITATION,
+    )
+
+  def _generate_examples(self, data_path, set_name):
+    set_filepath = os.path.join(
+        data_path, "VOCdevkit/VOC2012/ImageSets/Segmentation/{}.txt".format(set_name))
+    with tf.io.gfile.GFile(set_filepath, "r") as f:
+      for line in f:
+        image_id = line.strip()
+        example = self._generate_example(data_path, image_id)
+        yield image_id, example
+
+  def _generate_example(self, data_path, image_id):
+    """Yields examples."""
+    image_filepath = os.path.join(
+        data_path, "VOCdevkit/VOC2012/JPEGImages", "{}.jpg".format(image_id))
+    seg_class_filepath = os.path.join(
+        data_path, "VOCdevkit/VOC2012/SegmentationClass", "{}.png".format(image_id))
+    seg_obj_filepath = os.path.join(
+        data_path, "VOCdevkit/VOC2012/SegmentationObject", "{}.png".format(image_id))
+    return {
+        "image": image_filepath,
+        "image/filename": image_id + ".jpg",
+        "segmentation/class": seg_class_filepath,
+        "segmentation/object": seg_obj_filepath,
+    }

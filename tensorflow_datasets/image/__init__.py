@@ -83,3 +83,5 @@ from tensorflow_datasets.image.uc_merced import UcMerced
 from tensorflow_datasets.image.visual_domain_decathlon import VisualDomainDecathlon
 from tensorflow_datasets.image.voc import Voc2007
 from tensorflow_datasets.image.voc import Voc2012
+from tensorflow_datasets.image.voc import Voc2007Segmentation
+from tensorflow_datasets.image.voc import Voc2012Segmentation
