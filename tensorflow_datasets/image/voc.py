@@ -338,8 +338,13 @@ class Voc2007Segmentation(Voc2007):
     return {
         "image": image_filepath,
         "image/filename": image_id + ".jpg",
+<<<<<<< HEAD
         "segmentation/class": _load_image(seg_class_filepath),
         "segmentation/object": _load_image(seg_obj_filepath),
+=======
+        "segmentation/class": _rgb_to_label(_load_image(seg_class_filepath)),
+        "segmentation/object": _rgb_to_label(_load_image(seg_obj_filepath)),
+>>>>>>> Encode segmentation images correctly.
     }
 
 class Voc2012Segmentation(Voc2012):
