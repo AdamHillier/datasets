@@ -24,6 +24,7 @@ import xml.etree.ElementTree
 
 import tensorflow as tf
 import tensorflow_datasets.public_api as tfds
+import numpy as np
 
 
 _VOC2007_CITATION = """\
@@ -291,6 +292,13 @@ class Voc2012(tfds.core.GeneratorBasedBuilder):
         "labels_no_difficult": labels_no_difficult,
     }
 
+
+def _load_image(path):
+  with tf.io.gfile.GFile(path, "rb") as fp:
+    image = tfds.core.lazy_imports.PIL_Image.open(fp)
+  return np.expand_dims(np.array(image, dtype=np.uint8), axis=-1)
+
+
 class Voc2007Segmentation(Voc2007):
   """Pascal VOC 2007, segmentation."""
 
@@ -301,10 +309,10 @@ class Voc2007Segmentation(Voc2007):
         builder=self,
         description=_VOC2007_DESCRIPTION,
         features=tfds.features.FeaturesDict({
-            "image": tfds.features.Image(),
+            "image": tfds.features.Image(shape=(None, None, 3)),
             "image/filename": tfds.features.Text(),
-            "segmentation/class": tfds.features.Image(),
-            "segmentation/object": tfds.features.Image(),
+            "segmentation/class": tfds.features.Image(shape=(None, None, 1), dtype=tf.uint8),
+            "segmentation/object": tfds.features.Image(shape=(None, None, 1), dtype=tf.uint8),
         }),
         urls=[_VOC2007_URL],
         citation=_VOC2007_CITATION,
@@ -330,8 +338,8 @@ class Voc2007Segmentation(Voc2007):
     return {
         "image": image_filepath,
         "image/filename": image_id + ".jpg",
-        "segmentation/class": seg_class_filepath,
-        "segmentation/object": seg_obj_filepath,
+        "segmentation/class": _load_image(seg_class_filepath),
+        "segmentation/object": _load_image(seg_obj_filepath),
     }
 
 class Voc2012Segmentation(Voc2012):
@@ -344,10 +352,10 @@ class Voc2012Segmentation(Voc2012):
         builder=self,
         description=_VOC2012_DESCRIPTION,
         features=tfds.features.FeaturesDict({
-            "image": tfds.features.Image(),
+            "image": tfds.features.Image(shape=(None, None, 3)),
             "image/filename": tfds.features.Text(),
-            "segmentation/class": tfds.features.Image(),
-            "segmentation/object": tfds.features.Image(),
+            "segmentation/class": tfds.features.Image(shape=(None, None, 1), dtype=tf.uint8),
+            "segmentation/object": tfds.features.Image(shape=(None, None, 1), dtype=tf.uint8),
         }),
         urls=[_VOC2012_URL],
         citation=_VOC2012_CITATION,
@@ -373,6 +381,6 @@ class Voc2012Segmentation(Voc2012):
     return {
         "image": image_filepath,
         "image/filename": image_id + ".jpg",
-        "segmentation/class": seg_class_filepath,
-        "segmentation/object": seg_obj_filepath,
+        "segmentation/class": _load_image(seg_class_filepath),
+        "segmentation/object": _load_image(seg_obj_filepath),
     }
