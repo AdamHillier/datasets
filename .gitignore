@@ -21,3 +21,5 @@ dist/
 
 # PyCharm
 .idea
+
+env
