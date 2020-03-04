@@ -237,12 +237,13 @@ class DetectionExampleBuilder(VOCExampleBuilder):
         "labels_no_difficult": labels_no_difficult,
     }
 
-class SegmentationExampleBuilder(VOCExampleBuilder):
+class SegmentationExampleBuilder(DetectionExampleBuilder):
   """A helper class to build VOC segmentation examples."""
 
-  def __init__(self, filename, image_relative_path, class_mask_relative_path,
-        instance_mask_relative_path):
-    super(SegmentationExampleBuilder, self).__init__(filename, image_relative_path)
+  def __init__(self, filename, image_relative_path, annotation_relative_path,
+        class_mask_relative_path, instance_mask_relative_path):
+    super(SegmentationExampleBuilder, self).__init__(filename, image_relative_path,
+        annotation_relative_path)
     self.class_mask_relative_path = class_mask_relative_path
     self.instance_mask_relative_path = instance_mask_relative_path
 
@@ -337,7 +338,7 @@ class VocDetectionConfig(VocConfig):
     })
 
 
-class VocSegmentationConfig(VocConfig):
+class VocSegmentationConfig(VocDetectionConfig):
   @property
   def features(self):
     return tfds.features.FeaturesDict({
@@ -443,6 +444,7 @@ class Voc(tfds.core.GeneratorBasedBuilder):
                   example_builder=SegmentationExampleBuilder(
                       filename="trainval",
                       image_relative_path="VOCdevkit/VOC2007/JPEGImages/{}.jpg",
+                      annotation_relative_path="VOCdevkit/VOC2007/Annotations/{}.xml",
                       class_mask_relative_path="VOCdevkit/VOC2007/SegmentationClass/{}.png",
                       instance_mask_relative_path="VOCdevkit/VOC2007/SegmentationObject/{}.png"),
               ),
@@ -452,6 +454,7 @@ class Voc(tfds.core.GeneratorBasedBuilder):
                   example_builder=SegmentationExampleBuilder(
                       filename="trainval",
                       image_relative_path="VOCdevkit/VOC2007/JPEGImages/{}.jpg",
+                      annotation_relative_path="VOCdevkit/VOC2007/Annotations/{}.xml",
                       class_mask_relative_path="VOCdevkit/VOC2007/SegmentationClass/{}.png",
                       instance_mask_relative_path="VOCdevkit/VOC2007/SegmentationObject/{}.png"),
               ),
@@ -461,6 +464,7 @@ class Voc(tfds.core.GeneratorBasedBuilder):
                   example_builder=SegmentationExampleBuilder(
                       filename="test",
                       image_relative_path="VOCdevkit/VOC2007/JPEGImages/{}.jpg",
+                      annotation_relative_path="VOCdevkit/VOC2007/Annotations/{}.xml",
                       class_mask_relative_path="VOCdevkit/VOC2007/SegmentationClass/{}.png",
                       instance_mask_relative_path="VOCdevkit/VOC2007/SegmentationObject/{}.png"),
               ),
@@ -483,6 +487,7 @@ class Voc(tfds.core.GeneratorBasedBuilder):
                   example_builder=SegmentationExampleBuilder(
                       filename="trainval",
                       image_relative_path="VOCdevkit/VOC2012/JPEGImages/{}.jpg",
+                      annotation_relative_path="VOCdevkit/VOC2012/Annotations/{}.xml",
                       class_mask_relative_path="VOCdevkit/VOC2012/SegmentationClass/{}.png",
                       instance_mask_relative_path="VOCdevkit/VOC2012/SegmentationObject/{}.png"),
               ),
@@ -492,6 +497,7 @@ class Voc(tfds.core.GeneratorBasedBuilder):
                   example_builder=SegmentationExampleBuilder(
                       filename="trainval",
                       image_relative_path="VOCdevkit/VOC2012/JPEGImages/{}.jpg",
+                      annotation_relative_path="VOCdevkit/VOC2012/Annotations/{}.xml",
                       class_mask_relative_path="VOCdevkit/VOC2012/SegmentationClass/{}.png",
                       instance_mask_relative_path="VOCdevkit/VOC2012/SegmentationObject/{}.png"),
               ),
@@ -512,6 +518,7 @@ class Voc(tfds.core.GeneratorBasedBuilder):
                   example_builder=SegmentationExampleBuilder(
                       filename="sbd",
                       image_relative_path="benchmark_RELEASE/dataset/img/{}.jpg",
+                      annotation_relative_path="VOCdevkit/VOC2012/Annotations/{}.xml",
                       class_mask_relative_path="benchmark_RELEASE/dataset/cls/{}.mat",
                       instance_mask_relative_path="benchmark_RELEASE/dataset/inst/{}.mat"),
               ),
@@ -532,6 +539,7 @@ class Voc(tfds.core.GeneratorBasedBuilder):
                   example_builder=SegmentationExampleBuilder(
                       filename="sbd",
                       image_relative_path="benchmark_RELEASE/dataset/img/{}.jpg",
+                      annotation_relative_path="VOCdevkit/VOC2012/Annotations/{}.xml",
                       class_mask_relative_path="benchmark_RELEASE/dataset/cls/{}.mat",
                       instance_mask_relative_path="benchmark_RELEASE/dataset/inst/{}.mat"),
               ),
